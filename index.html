@@ -1,38 +1,92 @@
 <!DOCTYPE html>
 <html lang="hr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>RASPOREDI ČIŠĆENJA</title>
-
-  <!-- Google Fonts: Poppins -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
 
   <style>
+    :root {
+      --dark-bg: linear-gradient(to bottom right, #2c003e, #000000);
+      --dark-header: #3b1a52;
+      --dark-text: #f5e6ff;
+      --dark-btn: linear-gradient(135deg, #5e2e80 0%, #2a003f 100%);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: 'Poppins', sans-serif;
-      background-color: #ffffff;
+      background: var(--dark-bg);
       margin: 0;
       padding: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
       min-height: 100vh;
+      color: var(--dark-text);
+      overflow-x: hidden;
+      transition: all 0.4s ease;
     }
 
     header {
       width: 100%;
-      background-color: #005baa;
-      color: white;
+      background: linear-gradient(to top, rgba(44, 0, 62, 1), rgba(44, 0, 62, 0));
+      color: var(--dark-text);
       text-align: center;
-      padding: 2rem 1rem;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      padding: 2rem 1rem 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
     }
 
     h1 {
       margin: 0;
-      font-size: 2.5rem;
+      font-size: 2.7rem;
       letter-spacing: 1px;
+      z-index: 1;
+      position: relative;
+    }
+
+    .welcome {
+      font-size: 1rem;
+      font-style: italic;
+      margin-top: 0.5rem;
+      opacity: 0.9;
+    }
+
+    .stars {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .stars span {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.6;
+      animation: twinkle 4s infinite ease-in-out;
+    }
+
+    .stars span:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+    .stars span:nth-child(2) { top: 40%; left: 80%; animation-delay: 1s; }
+    .stars span:nth-child(3) { top: 60%; left: 50%; animation-delay: 2s; }
+    .stars span:nth-child(4) { top: 30%; left: 30%; animation-delay: 3s; }
+    .stars span:nth-child(5) { top: 10%; left: 90%; animation-delay: 1.5s; }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.4); }
     }
 
     .button-container {
@@ -45,48 +99,107 @@
     }
 
     .btn {
-      padding: 1rem;
-      background-color: #005baa;
-      color: white;
-      border: 2px solid #005baa;
-      border-radius: 8px;
+      padding: 1.2rem;
+      background: var(--dark-btn);
+      color: var(--dark-text);
+      border: none;
+      border-radius: 4px;
       font-size: 1.1rem;
       text-align: center;
       text-decoration: none;
-      transition: background-color 0.3s, color 0.3s, transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.4s ease;
+      box-shadow: 0 0 12px rgba(196, 140, 255, 0.2);
     }
 
     .btn:hover {
-      background-color: white;
-      color: #005baa;
-      transform: translateY(-3px);
-      box-shadow: 0 4px 12px rgba(0, 91, 170, 0.3);
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(196, 140, 255, 0.3);
+    }
+
+    .btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -75%;
+      width: 50%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      transform: skewX(-20deg);
+      transition: left 0.6s ease;
+      z-index: 1;
+    }
+
+    .btn:hover::before {
+      left: 120%;
+    }
+
+    .btn span {
+      position: relative;
+      z-index: 2;
+      font-weight: 600;
+      letter-spacing: 0.5px;
     }
 
     footer {
       margin-top: auto;
       padding: 1rem;
       font-size: 0.9rem;
-      color: #888;
+      color: var(--dark-text);
       text-align: center;
+      background-color: var(--dark-header);
+      width: 100%;
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background: transparent;
+      border: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+      z-index: 10;
+      transition: transform 0.2s ease;
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.2);
     }
   </style>
 </head>
-<body>
+<body class="dark-mode">
+  <button class="theme-toggle" onclick="toggleTheme()">☀️</button>
+
   <header>
     <h1>RASPOREDI ČIŠĆENJA</h1>
+    <p class="welcome">When dusk falls and the day fades, your cleaning scrolls await.<br/>Tap each to reveal what lies ahead…</p>
+    <div class="stars">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
   </header>
 
   <div class="button-container">
-    <a class="btn" href="https://irundo.com/rentlioapi/irundo_checkin_out.php" target="_blank">IRUNDO</a>
-    <a class="btn" href="https://irundo.com/rentlioapi/cra_checkin_out.php" target="_blank">CRA</a>
-    <a class="btn" href="https://irundo.com/rentlioapi/sunny_checkin_out_test.php" target="_blank">SUNNY</a>
-    <a class="btn" href="https://irundo.com/rentlioapi/blubini_checkin_out.php" target="_blank">BLUBINI</a>
-    <a class="btn" href="https://irundo.com/rentlioapi/Villas_checkin_out.php" target="_blank">VILLAS</a>
+    <a class="btn" href="https://irundo.com/rentlioapi/irundo_checkin_out.php" target="_blank"><span>💖 IRUNDO</span></a>
+    <a class="btn" href="https://irundo.com/rentlioapi/cra_checkin_out.php" target="_blank"><span>✨ CRA</span></a>
+    <a class="btn" href="https://irundo.com/rentlioapi/sunny_checkin_out_test.php" target="_blank"><span>🌞 SUNNY</span></a>
+    <a class="btn" href="https://irundo.com/rentlioapi/blubini_checkin_out.php" target="_blank"><span>🐚 BLUBINI</span></a>
+    <a class="btn" href="https://irundo.com/rentlioapi/Villas_checkin_out.php" target="_blank"><span>🏡 VILLAS</span></a>
+    <a class="btn" href="https://irundo.com/rentlioapi/vienna_checkin_out.php" target="_blank"><span>🎻 VIENNA</span></a>
   </div>
 
   <footer>
     &copy; 2025 BEBA BRAT ĆERGONDO
   </footer>
+
+  <script>
+    const toggleBtn = document.querySelector(".theme-toggle");
+    function toggleTheme() {
+      document.body.classList.toggle('dark-mode');
+      toggleBtn.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+    }
+    toggleBtn.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+  </script>
 </body>
 </html>
