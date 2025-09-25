@@ -21,18 +21,19 @@
       --radius: 18px;
     }
 
-    body{
+    html, body{
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial;
       color:var(--text);
       background: linear-gradient(135deg, var(--bg1), var(--bg2));
-      min-height:100vh;
-      display:flex;
-      align-items:flex-start;
-      justify-content:center;
+      min-height:100%;
+    }
+
+    body{
+      display:block;
       padding: 40px 20px;
       position: relative;
-      overflow: hidden;
+      overflow-x: hidden;
     }
 
     /* suptilne wavy linije u pozadini */
@@ -62,7 +63,7 @@
       -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="200" viewBox="0 0 600 200"><path d="M0 100 Q150 200 300 100 T600 100 V0 H0 Z" fill="white"/></svg>');
     }
 
-    .wrap{ width: min(960px, 100%); position: relative; z-index:1; }
+    .wrap{ width: min(960px, 100%); position: relative; z-index:1; margin:0 auto; }
 
     header{ text-align:center; margin-bottom: 28px; }
     h1{ font-size: clamp(28px, 5vw, 46px); margin:0 0 10px 0; letter-spacing:.5px; }
@@ -126,31 +127,31 @@
     <section>
       <h2 class="group-title title-17h">ŠALJEMO DO 17h</h2>
       <nav class="grid group-17h">
-        <a class="tile" href="https://irundo.com/rentlioapi/sunny_checkin_out_test.php" target="_blank">SUNNY</a>
-        <a class="tile" href="https://irundo.com/rentlioapi/vienna_checkin_out.php" target="_blank">VIENNA</a>
+        <a class="tile" href="https://irundo.com/rentlioapi/sunny_checkin_out_test.php" target="_blank" title="Pregled dolazaka/odlazaka za Sunny">SUNNY</a>
+        <a class="tile" href="https://irundo.com/rentlioapi/vienna_checkin_out.php" target="_blank" title="Pregled dolazaka/odlazaka za Vienna">VIENNA</a>
       </nav>
     </section>
 
     <section>
-      <h2 class="group-title title-21h">ŠALJEMO SVAKI DAN DO 21h</h2>
+      <h2 class="group-title title-21h">ŠALJEMO DO 21h</h2>
       <nav class="grid group-21h">
-        <a class="tile" href="https://irundo.com/rentlioapi/irundo_checkin_out.php" target="_blank">IRUNDO</a>
-        <a class="tile" href="https://irundo.com/rentlioapi/cra_checkin_out.php" target="_blank">CRA</a>
-        <a class="tile" href="https://irundo.com/rentlioapi/blubini_checkin_out.php" target="_blank">BLUBINI</a>
+        <a class="tile" href="https://irundo.com/rentlioapi/irundo_checkin_out.php" target="_blank" title="Pregled dolazaka/odlazaka za Irundo">IRUNDO</a>
+        <a class="tile" href="https://irundo.com/rentlioapi/cra_checkin_out.php" target="_blank" title="Pregled dolazaka/odlazaka za CRA">CRA</a>
+        <a class="tile" href="https://irundo.com/rentlioapi/blubini_checkin_out.php" target="_blank" title="Pregled dolazaka/odlazaka za Blubini">BLUBINI</a>
       </nav>
     </section>
 
     <section>
       <h2 class="group-title title-nedjelja">ŠALJEMO NEDJELJOM</h2>
       <nav class="grid group-nedjelja">
-        <a class="tile" href="https://irundo.com/rentlioapi/Villas_checkin_out.php" target="_blank">VILLAS</a>
+        <a class="tile" href="https://irundo.com/rentlioapi/Villas_checkin_out.php" target="_blank" title="Pregled dolazaka/odlazaka za Villas">VILLAS</a>
       </nav>
     </section>
 
     <section>
       <h2 class="group-title title-posebno">POSEBNO</h2>
       <nav class="grid">
-        <a class="tile posteljina" href="https://irundo.com/rentlioapi/rasporedposteljine.php" target="_blank" rel="noopener">POSTELJINA</a>
+        <a class="tile posteljina" href="https://irundo.com/rentlioapi/rasporedposteljine.php" target="_blank" rel="noopener" title="Raspored posteljine">POSTELJINA</a>
       </nav>
     </section>
 
@@ -158,4 +159,3 @@
   </main>
 </body>
 </html>
-
