@@ -2,204 +2,159 @@
 <html lang="hr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>RASPOREDI ČIŠĆENJA</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rasporedi čišćenja</title>
   <style>
-    :root {
-      --dark-bg: linear-gradient(to bottom right, #2c003e, #000000);
-      --dark-header: #3b1a52;
-      --dark-text: #f5e6ff;
-      --dark-btn: linear-gradient(135deg, #5e2e80 0%, #2a003f 100%);
+    :root{
+      --bg1:#0c0b10;
+      --bg2:#161421;
+      --text:#f6f6f9;
+      --muted:#b5b2c7;
+      --card:rgba(255,255,255,.06);
+      --glass:rgba(255,255,255,.08);
+      --accent:#ff6fb5;
+      --accent-2:#8ad7ff;
+      --accent-3:#a0e8af;
+      --accent-4:#ffd27f;
+      --ring: rgba(255, 111, 181, .45);
+      --shadow: 0 20px 50px rgba(0,0,0,.35);
+      --radius: 18px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: var(--dark-bg);
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      color: var(--dark-text);
-      overflow-x: hidden;
-      transition: all 0.4s ease;
-    }
-
-    header {
-      width: 100%;
-      background: linear-gradient(to top, rgba(44, 0, 62, 1), rgba(44, 0, 62, 0));
-      color: var(--dark-text);
-      text-align: center;
-      padding: 2rem 1rem 1rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial;
+      color:var(--text);
+      background: linear-gradient(135deg, var(--bg1), var(--bg2));
+      min-height:100vh;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      padding: 40px 20px;
       position: relative;
       overflow: hidden;
     }
 
-    h1 {
-      margin: 0;
-      font-size: 2.7rem;
+    /* suptilne wavy linije u pozadini */
+    body::before,
+    body::after{
+      content:"";
+      position:absolute;
+      left:0; right:0;
+      height:200px;
+      background-repeat: repeat-x;
+      background-size: 600px 200px;
+      opacity:0.07;
+      z-index:0;
+    }
+
+    body::before{
+      top:0;
+      background-image: radial-gradient(circle at 50% 50%, var(--accent-2) 0%, transparent 70%);
+      mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="200" viewBox="0 0 600 200"><path d="M0 100 Q150 0 300 100 T600 100 V200 H0 Z" fill="white"/></svg>');
+      -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="200" viewBox="0 0 600 200"><path d="M0 100 Q150 0 300 100 T600 100 V200 H0 Z" fill="white"/></svg>');
+    }
+
+    body::after{
+      bottom:0;
+      background-image: radial-gradient(circle at 50% 50%, var(--accent-3) 0%, transparent 70%);
+      mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="200" viewBox="0 0 600 200"><path d="M0 100 Q150 200 300 100 T600 100 V0 H0 Z" fill="white"/></svg>');
+      -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="200" viewBox="0 0 600 200"><path d="M0 100 Q150 200 300 100 T600 100 V0 H0 Z" fill="white"/></svg>');
+    }
+
+    .wrap{ width: min(960px, 100%); position: relative; z-index:1; }
+
+    header{ text-align:center; margin-bottom: 28px; }
+    h1{ font-size: clamp(28px, 5vw, 46px); margin:0 0 10px 0; letter-spacing:.5px; }
+    p.lead{ margin:0; color:var(--muted); font-size: clamp(14px, 2.4vw, 18px); }
+
+    h2.group-title{
+      margin: 40px 0 15px;
+      font-size: 1.2rem;
+      font-weight:600;
+      text-transform: uppercase;
       letter-spacing: 1px;
-      z-index: 1;
-      position: relative;
     }
 
-    .welcome {
-      font-size: 1rem;
-      font-style: italic;
-      margin-top: 0.5rem;
-      opacity: 0.9;
+    .title-17h { color: var(--accent-2); }
+    .title-21h { color: var(--accent-3); }
+    .title-nedjelja { color: var(--accent-4); }
+    .title-posebno { color: var(--accent); }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap:18px;
+      margin-bottom: 20px;
     }
 
-    .stars {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
+    a.tile{
+      display:flex; align-items:center; justify-content:center;
+      padding: 22px 18px;
+      border-radius: var(--radius);
+      text-decoration:none;
+      color:var(--text);
+      font-weight:700; font-size: 1.05rem;
+      background: linear-gradient(180deg, var(--glass), rgba(255,255,255,.03));
+      box-shadow: var(--shadow);
+      border:1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(8px);
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
     }
 
-    .stars span {
-      position: absolute;
-      width: 4px;
-      height: 4px;
-      background: white;
-      border-radius: 50%;
-      opacity: 0.6;
-      animation: twinkle 4s infinite ease-in-out;
+    a.tile:hover{ transform: translateY(-4px); border-color: var(--ring); box-shadow: 0 18px 40px rgba(255,111,181,.25); }
+
+    .grid.group-17h a.tile { background: linear-gradient(135deg, rgba(138,215,255,.15), rgba(255,255,255,.04)); border-color: rgba(138,215,255,.25); }
+    .grid.group-21h a.tile { background: linear-gradient(135deg, rgba(160,232,175,.15), rgba(255,255,255,.04)); border-color: rgba(160,232,175,.25); }
+    .grid.group-nedjelja a.tile { background: linear-gradient(135deg, rgba(255,210,127,.15), rgba(255,255,255,.04)); border-color: rgba(255,210,127,.25); }
+
+    a.tile.posteljina{
+      background: linear-gradient(135deg, rgba(255,111,181,.25), rgba(138,215,255,.18));
+      border-color: rgba(255,111,181,.35);
     }
 
-    .stars span:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
-    .stars span:nth-child(2) { top: 40%; left: 80%; animation-delay: 1s; }
-    .stars span:nth-child(3) { top: 60%; left: 50%; animation-delay: 2s; }
-    .stars span:nth-child(4) { top: 30%; left: 30%; animation-delay: 3s; }
-    .stars span:nth-child(5) { top: 10%; left: 90%; animation-delay: 1.5s; }
-
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.2; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.4); }
-    }
-
-    .button-container {
-      margin: 3rem 1rem;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.5rem;
-      width: 100%;
-      max-width: 900px;
-    }
-
-    .btn {
-      padding: 1.2rem;
-      background: var(--dark-btn);
-      color: var(--dark-text);
-      border: none;
-      border-radius: 4px;
-      font-size: 1.1rem;
-      text-align: center;
-      text-decoration: none;
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.3s ease, box-shadow 0.4s ease;
-      box-shadow: 0 0 12px rgba(196, 140, 255, 0.2);
-    }
-
-    .btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 8px 20px rgba(196, 140, 255, 0.3);
-    }
-
-    .btn::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -75%;
-      width: 50%;
-      height: 100%;
-      background: rgba(255, 255, 255, 0.1);
-      transform: skewX(-20deg);
-      transition: left 0.6s ease;
-      z-index: 1;
-    }
-
-    .btn:hover::before {
-      left: 120%;
-    }
-
-    .btn span {
-      position: relative;
-      z-index: 2;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-    }
-
-    footer {
-      margin-top: auto;
-      padding: 1rem;
-      font-size: 0.9rem;
-      color: var(--dark-text);
-      text-align: center;
-      background-color: var(--dark-header);
-      width: 100%;
-    }
-
-    .theme-toggle {
-      position: fixed;
-      top: 1rem;
-      right: 1rem;
-      background: transparent;
-      border: none;
-      font-size: 1.8rem;
-      cursor: pointer;
-      z-index: 10;
-      transition: transform 0.2s ease;
-    }
-
-    .theme-toggle:hover {
-      transform: scale(1.2);
-    }
+    footer{ text-align:center; color:var(--muted); margin-top: 40px; font-size:13px; }
   </style>
 </head>
-<body class="dark-mode">
-  <button class="theme-toggle" onclick="toggleTheme()">☀️</button>
+<body>
+  <main class="wrap">
+    <header>
+      <h1>RASPOREDI ČIŠĆENJA</h1>
+      <p class="lead">Odaberi raspored prema vremenu slanja</p>
+    </header>
 
-  <header>
-    <h1>RASPOREDI ČIŠĆENJA</h1>
-    <p class="welcome">When dusk falls and the day fades, your cleaning scrolls await.<br/>Tap each to reveal what lies ahead…</p>
-    <div class="stars">
-      <span></span><span></span><span></span><span></span><span></span>
-    </div>
-  </header>
+    <section>
+      <h2 class="group-title title-17h">ŠALJEMO DO 17h</h2>
+      <nav class="grid group-17h">
+        <a class="tile" href="https://irundo.com/rentlioapi/sunny_checkin_out_test.php" target="_blank">SUNNY</a>
+        <a class="tile" href="https://irundo.com/rentlioapi/vienna_checkin_out.php" target="_blank">VIENNA</a>
+      </nav>
+    </section>
 
-  <div class="button-container">
-    <a class="btn" href="https://irundo.com/rentlioapi/irundo_checkin_out.php" target="_blank"><span>💖 IRUNDO</span></a>
-    <a class="btn" href="https://irundo.com/rentlioapi/cra_checkin_out.php" target="_blank"><span>✨ CRA</span></a>
-    <a class="btn" href="https://irundo.com/rentlioapi/sunny_checkin_out_test.php" target="_blank"><span>🌞 SUNNY</span></a>
-    <a class="btn" href="https://irundo.com/rentlioapi/blubini_checkin_out.php" target="_blank"><span>🐚 BLUBINI</span></a>
-    <a class="btn" href="https://irundo.com/rentlioapi/Villas_checkin_out.php" target="_blank"><span>🏡 VILLAS</span></a>
-    <a class="btn" href="https://irundo.com/rentlioapi/vienna_checkin_out.php" target="_blank"><span>🎻 VIENNA</span></a>
-  </div>
+    <section>
+      <h2 class="group-title title-21h">ŠALJEMO SVAKI DAN DO 21h</h2>
+      <nav class="grid group-21h">
+        <a class="tile" href="https://irundo.com/rentlioapi/irundo_checkin_out.php" target="_blank">IRUNDO</a>
+        <a class="tile" href="https://irundo.com/rentlioapi/cra_checkin_out.php" target="_blank">CEA</a>
+        <a class="tile" href="https://irundo.com/rentlioapi/blubini_checkin_out.php" target="_blank">BLUBINI</a>
+      </nav>
+    </section>
 
-  <footer>
-    &copy; 2025 BEBA BRAT ĆERGONDO
-  </footer>
+    <section>
+      <h2 class="group-title title-nedjelja">ŠALJEMO NEDJELJOM</h2>
+      <nav class="grid group-nedjelja">
+        <a class="tile" href="https://irundo.com/rentlioapi/Villas_checkin_out.php" target="_blank">VILLAS</a>
+      </nav>
+    </section>
 
-  <script>
-    const toggleBtn = document.querySelector(".theme-toggle");
-    function toggleTheme() {
-      document.body.classList.toggle('dark-mode');
-      toggleBtn.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
-    }
-    toggleBtn.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
-  </script>
+    <section>
+      <h2 class="group-title title-posebno">POSEBNO</h2>
+      <nav class="grid">
+        <a class="tile posteljina" href="https://irundo.com/rentlioapi/rasporedposteljine.php" target="_blank" rel="noopener">POSTELJINA</a>
+      </nav>
+    </section>
+
+    <footer>© 2025 BEBA BRAT ĆERGONDO</footer>
+  </main>
 </body>
 </html>
