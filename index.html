@@ -4,117 +4,255 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Rasporedi čišćenja</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
   <style>
     :root{
-      --bg1:#0c0b10;
-      --bg2:#161421;
-      --text:#f6f6f9;
-      --muted:#b5b2c7;
-      --card:rgba(255,255,255,.06);
-      --glass:rgba(255,255,255,.08);
-      --accent:#ff6fb5;
-      --accent-2:#8ad7ff;
-      --accent-3:#a0e8af;
-      --accent-4:#ffd27f;
-      --ring: rgba(255, 111, 181, .45);
-      --shadow: 0 20px 50px rgba(0,0,0,.35);
-      --radius: 18px;
+      --bg1: #0a0e27;
+      --bg2: #162447;
+      --text: #f0f4f8;
+      --muted: #94a3b8;
+      --card: rgba(255,255,255,.05);
+      --glass: rgba(255,255,255,.08);
+      --accent-cyan: #06b6d4;
+      --accent-blue: #38bdf8;
+      --accent-coral: #fb7185;
+      --accent-teal: #2dd4bf;
+      --accent-amber: #fbbf24;
+      --ring-cyan: rgba(6, 182, 212, .4);
+      --ring-coral: rgba(251, 113, 133, .4);
+      --shadow: 0 20px 50px rgba(0,0,0,.4);
+      --radius: 20px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
     html, body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial;
-      color:var(--text);
-      background: linear-gradient(135deg, var(--bg1), var(--bg2));
-      min-height:100%;
-    }
-
-    body{
-      display:block;
-      padding: 40px 20px;
+      margin: 0;
+      font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;
+      color: var(--text);
+      background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%);
+      min-height: 100vh;
       position: relative;
       overflow-x: hidden;
     }
 
-    /* suptilne wavy linije u pozadini */
-    body::before,
-    body::after{
-      content:"";
-      position:absolute;
-      left:0; right:0;
-      height:200px;
-      background-repeat: repeat-x;
-      background-size: 600px 200px;
-      opacity:0.07;
-      z-index:0;
+    /* Animated background elements */
+    body::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 20% 50%, rgba(6, 182, 212, 0.08) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 80%, rgba(251, 113, 133, 0.08) 0%, transparent 50%),
+                  radial-gradient(circle at 40% 20%, rgba(56, 189, 248, 0.06) 0%, transparent 50%);
+      animation: float 20s ease-in-out infinite;
+      z-index: 0;
     }
 
-    body::before{
-      top:0;
-      background-image: radial-gradient(circle at 50% 50%, var(--accent-2) 0%, transparent 70%);
-      mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="200" viewBox="0 0 600 200"><path d="M0 100 Q150 0 300 100 T600 100 V200 H0 Z" fill="white"/></svg>');
-      -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="200" viewBox="0 0 600 200"><path d="M0 100 Q150 0 300 100 T600 100 V200 H0 Z" fill="white"/></svg>');
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      33% { transform: translate(30px, -30px) rotate(5deg); }
+      66% { transform: translate(-20px, 20px) rotate(-5deg); }
     }
 
-    body::after{
-      bottom:0;
-      background-image: radial-gradient(circle at 50% 50%, var(--accent-3) 0%, transparent 70%);
-      mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="200" viewBox="0 0 600 200"><path d="M0 100 Q150 200 300 100 T600 100 V0 H0 Z" fill="white"/></svg>');
-      -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="200" viewBox="0 0 600 200"><path d="M0 100 Q150 200 300 100 T600 100 V0 H0 Z" fill="white"/></svg>');
+    body {
+      padding: 60px 20px;
     }
 
-    .wrap{ width: min(960px, 100%); position: relative; z-index:1; margin:0 auto; }
+    .wrap { 
+      max-width: 1000px;
+      position: relative;
+      z-index: 1;
+      margin: 0 auto;
+      animation: fadeIn 0.8s ease-out;
+    }
 
-    header{ text-align:center; margin-bottom: 28px; }
-    h1{ font-size: clamp(28px, 5vw, 46px); margin:0 0 10px 0; letter-spacing:.5px; }
-    p.lead{ margin:0; color:var(--muted); font-size: clamp(14px, 2.4vw, 18px); }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-    h2.group-title{
-      margin: 40px 0 15px;
-      font-size: 1.2rem;
-      font-weight:600;
+    header { 
+      text-align: center;
+      margin-bottom: 50px;
+      animation: fadeIn 0.8s ease-out 0.2s backwards;
+    }
+
+    h1 { 
+      font-size: clamp(32px, 6vw, 56px);
+      margin: 0 0 14px 0;
+      font-weight: 800;
+      letter-spacing: -1px;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    p.lead { 
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(15px, 2.5vw, 19px);
+      font-weight: 500;
+    }
+
+    section {
+      animation: fadeIn 0.8s ease-out backwards;
+    }
+
+    section:nth-child(1) { animation-delay: 0.3s; }
+    section:nth-child(2) { animation-delay: 0.4s; }
+    section:nth-child(3) { animation-delay: 0.5s; }
+    section:nth-child(4) { animation-delay: 0.6s; }
+
+    h2.group-title {
+      margin: 45px 0 20px;
+      font-size: 0.95rem;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 2px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
-    .title-17h { color: var(--accent-2); }
-    .title-21h { color: var(--accent-3); }
-    .title-nedjelja { color: var(--accent-4); }
-    .title-posebno { color: var(--accent); }
-
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap:18px;
-      margin-bottom: 20px;
+    h2.group-title::before {
+      content: "";
+      width: 4px;
+      height: 20px;
+      border-radius: 4px;
+      display: inline-block;
     }
 
-    a.tile{
-      display:flex; align-items:center; justify-content:center;
-      padding: 22px 18px;
+    .title-17h { color: var(--accent-blue); }
+    .title-17h::before { background: var(--accent-blue); }
+
+    .title-21h { color: var(--accent-teal); }
+    .title-21h::before { background: var(--accent-teal); }
+
+    .title-nedjelja { color: var(--accent-amber); }
+    .title-nedjelja::before { background: var(--accent-amber); }
+
+    .title-posebno { color: var(--accent-coral); }
+    .title-posebno::before { background: var(--accent-coral); }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 25px;
+    }
+
+    a.tile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 32px 20px;
       border-radius: var(--radius);
-      text-decoration:none;
-      color:var(--text);
-      font-weight:700; font-size: 1.05rem;
-      background: linear-gradient(180deg, var(--glass), rgba(255,255,255,.03));
-      box-shadow: var(--shadow);
-      border:1px solid rgba(255,255,255,.12);
-      backdrop-filter: blur(8px);
-      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: 0.5px;
+      background: linear-gradient(135deg, var(--glass), rgba(255,255,255,.02));
+      box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.15);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
     }
 
-    a.tile:hover{ transform: translateY(-4px); border-color: var(--ring); box-shadow: 0 18px 40px rgba(255,111,181,.25); }
-
-    .grid.group-17h a.tile { background: linear-gradient(135deg, rgba(138,215,255,.15), rgba(255,255,255,.04)); border-color: rgba(138,215,255,.25); }
-    .grid.group-21h a.tile { background: linear-gradient(135deg, rgba(160,232,175,.15), rgba(255,255,255,.04)); border-color: rgba(160,232,175,.25); }
-    .grid.group-nedjelja a.tile { background: linear-gradient(135deg, rgba(255,210,127,.15), rgba(255,255,255,.04)); border-color: rgba(255,210,127,.25); }
-
-    a.tile.posteljina{
-      background: linear-gradient(135deg, rgba(255,111,181,.25), rgba(138,215,255,.18));
-      border-color: rgba(255,111,181,.35);
+    a.tile::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, transparent, rgba(255,255,255,.05));
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
 
-    footer{ text-align:center; color:var(--muted); margin-top: 40px; font-size:13px; }
+    a.tile:hover::before {
+      opacity: 1;
+    }
+
+    a.tile:hover { 
+      transform: translateY(-6px) scale(1.02);
+      border-color: rgba(255,255,255,.3);
+      box-shadow: 0 25px 60px rgba(0,0,0,.5), 
+                  0 0 40px var(--tile-glow),
+                  inset 0 1px 0 rgba(255,255,255,.2);
+    }
+
+    .tile-icon {
+      width: 48px;
+      height: 48px;
+      opacity: 0.9;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,.3));
+      transition: all 0.3s ease;
+    }
+
+    a.tile:hover .tile-icon {
+      transform: scale(1.1);
+      opacity: 1;
+    }
+
+    /* Group specific styles */
+    .grid.group-17h a.tile { 
+      background: linear-gradient(135deg, rgba(56,189,248,.12), rgba(255,255,255,.04));
+      border-color: rgba(56,189,248,.3);
+      --tile-glow: rgba(56,189,248,.3);
+    }
+
+    .grid.group-21h a.tile { 
+      background: linear-gradient(135deg, rgba(45,212,191,.12), rgba(255,255,255,.04));
+      border-color: rgba(45,212,191,.3);
+      --tile-glow: rgba(45,212,191,.3);
+    }
+
+    .grid.group-nedjelja a.tile { 
+      background: linear-gradient(135deg, rgba(251,191,36,.12), rgba(255,255,255,.04));
+      border-color: rgba(251,191,36,.3);
+      --tile-glow: rgba(251,191,36,.3);
+    }
+
+    a.tile.posteljina {
+      background: linear-gradient(135deg, rgba(251,113,133,.18), rgba(6,182,212,.12));
+      border-color: rgba(251,113,133,.4);
+      --tile-glow: rgba(251,113,133,.4);
+    }
+
+    footer { 
+      text-align: center;
+      color: var(--muted);
+      margin-top: 60px;
+      font-size: 13px;
+      font-weight: 500;
+      animation: fadeIn 0.8s ease-out 0.7s backwards;
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      body { padding: 40px 16px; }
+      .grid { grid-template-columns: 1fr; gap: 16px; }
+      h2.group-title { margin: 35px 0 16px; font-size: 0.85rem; }
+      a.tile { padding: 28px 20px; }
+    }
   </style>
 </head>
 <body>
@@ -127,31 +265,78 @@
     <section>
       <h2 class="group-title title-17h">ŠALJEMO DO 17h</h2>
       <nav class="grid group-17h">
-        <a class="tile" href="https://irundo.com/rentlioapi/sunny_checkin_out_test.php" target="_blank" title="Pregled dolazaka/odlazaka za Sunny">SUNNY</a>
-        <a class="tile" href="https://irundo.com/rentlioapi/vienna_checkin_out.php" target="_blank" title="Pregled dolazaka/odlazaka za Vienna">VIENNA</a>
+        <a class="tile" href="https://irundo.com/rentlioapi/sunny_checkin_out_test.php" target="_blank" title="Pregled dolazaka/odlazaka za Sunny">
+          <svg class="tile-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 17L12 22L22 17" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 12L12 17L22 12" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          SUNNY
+        </a>
+        <a class="tile" href="https://irundo.com/rentlioapi/vienna_checkin_out.php" target="_blank" title="Pregled dolazaka/odlazaka za Vienna">
+          <svg class="tile-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M9 22V12H15V22" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          VIENNA
+        </a>
       </nav>
     </section>
 
     <section>
       <h2 class="group-title title-21h">ŠALJEMO DO 21h</h2>
       <nav class="grid group-21h">
-        <a class="tile" href="https://irundo.com/rentlioapi/irundo_checkin_out.php" target="_blank" title="Pregled dolazaka/odlazaka za Irundo">IRUNDO</a>
-        <a class="tile" href="https://irundo.com/rentlioapi/cra_checkin_out.php" target="_blank" title="Pregled dolazaka/odlazaka za CRA">CRA</a>
-        <a class="tile" href="https://irundo.com/rentlioapi/blubini_checkin_out.php" target="_blank" title="Pregled dolazaka/odlazaka za Blubini">BLUBINI</a>
+        <a class="tile" href="https://irundo.com/rentlioapi/irundo_checkin_out.php" target="_blank" title="Pregled dolazaka/odlazaka za Irundo">
+          <svg class="tile-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="3" width="18" height="18" rx="2" stroke="#2dd4bf" stroke-width="2"/>
+            <path d="M9 3V21M15 3V21M3 9H21M3 15H21" stroke="#2dd4bf" stroke-width="2"/>
+          </svg>
+          IRUNDO
+        </a>
+        <a class="tile" href="https://irundo.com/rentlioapi/cra_checkin_out.php" target="_blank" title="Pregled dolazaka/odlazaka za CRA">
+          <svg class="tile-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="#2dd4bf" stroke-width="2"/>
+            <circle cx="12" cy="10" r="3" stroke="#2dd4bf" stroke-width="2"/>
+          </svg>
+          CRA
+        </a>
+        <a class="tile" href="https://irundo.com/rentlioapi/blubini_checkin_out.php" target="_blank" title="Pregled dolazaka/odlazaka za Blubini">
+          <svg class="tile-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="#2dd4bf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          BLUBINI
+        </a>
       </nav>
     </section>
 
     <section>
       <h2 class="group-title title-nedjelja">ŠALJEMO NEDJELJOM</h2>
       <nav class="grid group-nedjelja">
-        <a class="tile" href="https://irundo.com/rentlioapi/Villas_checkin_out.php" target="_blank" title="Pregled dolazaka/odlazaka za Villas">VILLAS</a>
+        <a class="tile" href="https://irundo.com/rentlioapi/Villas_checkin_out.php" target="_blank" title="Pregled dolazaka/odlazaka za Villas">
+          <svg class="tile-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 12L12 3L21 12" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M5 10V20C5 20.5304 5.21071 21.0391 5.58579 21.4142C5.96086 21.7893 6.46957 22 7 22H10" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M19 10V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H14" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M10 22V17C10 16.4696 10.2107 15.9609 10.5858 15.5858C10.9609 15.2107 11.4696 15 12 15C12.5304 15 13.0391 15.2107 13.4142 15.5858C13.7893 15.9609 14 16.4696 14 17V22" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          VILLAS
+        </a>
       </nav>
     </section>
 
     <section>
       <h2 class="group-title title-posebno">POSEBNO</h2>
       <nav class="grid">
-        <a class="tile posteljina" href="https://irundo.com/rentlioapi/rasporedposteljine.php" target="_blank" rel="noopener" title="Raspored posteljine">POSTELJINA</a>
+        <a class="tile posteljina" href="https://irundo.com/rentlioapi/rasporedposteljine.php" target="_blank" rel="noopener" title="Raspored posteljine">
+          <svg class="tile-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 4V20" stroke="#fb7185" stroke-width="2" stroke-linecap="round"/>
+            <path d="M22 4V20" stroke="#fb7185" stroke-width="2" stroke-linecap="round"/>
+            <path d="M7 4H17C18.1046 4 19 4.89543 19 6V14C19 15.1046 18.1046 16 17 16H7C5.89543 16 5 15.1046 5 14V6C5 4.89543 5.89543 4 7 4Z" stroke="#fb7185" stroke-width="2"/>
+            <path d="M2 16H22" stroke="#fb7185" stroke-width="2" stroke-linecap="round"/>
+            <path d="M12 4V16" stroke="#fb7185" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          POSTELJINA
+        </a>
       </nav>
     </section>
 
